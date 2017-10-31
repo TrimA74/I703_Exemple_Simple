@@ -21,17 +21,29 @@ parser code {:
 :};
 
 /* symboles terminaux */
+/*
 terminal VERBE, PRONOM, ADJECTIF, POINT;
-terminal ERROR;
-
+terminal ERROR;*/
+terminal PLUS , MINUS , DIVIDE , MODULO , SEP , STAR , PARD , PARG ;
+terminal Integer NUMBER;
 /* non terminaux */
-non terminal phrase , texte;
+non terminal Expr , OP , Calcul;
 
 /* grammaire */
 
-texte   ::= phrase texte 
-          | phrase ; 
-phrase  ::= PRONOM VERBE ADJECTIF POINT 
-          | error  POINT 
-          ;
+/* grammaire calcul */
+Calcul  ::= Calcul Expr SEP
+            | Expr SEP ;
+Expr    ::= NUMBER:e1 {: System.out.println(e1); :} OP Expr
+        | NUMBER:e {: System.out.println(e); :} ;
+OP      ::= PLUS | MINUS | MODULO | STAR;
+
+/* texte   ::= phrase texte | phrase ;
+phrase  ::= PRONOM VERBE ADJECTIF POINT | error  POINT ;
+
+          */
+
+
+
+
 

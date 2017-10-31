@@ -23,21 +23,30 @@ import java_cup.runtime.Symbol;
 %}
 
 /* definitions regulieres */
-il      =   "Il"|"il"
-elle    =   "Elle"|"elle" 
-pronom 	=   {il}|{elle}
-verbe   =   "est"|"boit"
-adj     =   "vite"|"beau"|"belle"|"bien"|"chaud"
-sep     =   \s
-point   =   [.?!;]
+
+plus    = "+"
+minus   = "-"
+star    = "*"
+divide  = "/"
+modulo  = "%"
+parg    = "("
+pard    = ")"
+sep = ";"
+chiffre = [0-9]
+number = {chiffre} {chiffre}*
+blanc  = \s
+
 
 %% 
 /* ------------------------Section des Regles Lexicales----------------------*/
 
-/* regles */
-{sep}+          { /* pas d'action */ }
-{pronom}        { return new Symbol(SimpleParserSym.PRONOM); }
-{verbe}         { return new Symbol(SimpleParserSym.VERBE); }
-{adj}           { return new Symbol(SimpleParserSym.ADJECTIF); }
-{point}         { return new Symbol(SimpleParserSym.POINT); }
-.               { return new Symbol(SimpleParserSym.ERROR); }
+{blanc}+ {}
+{plus}        { System.out.println("+");return new Symbol(SimpleParserSym.PLUS); }
+{minus}        { System.out.println("-");return new Symbol(SimpleParserSym.MINUS); }
+{star}        { System.out.println("*");return new Symbol(SimpleParserSym.STAR); }
+{divide}        { System.out.println("/");return new Symbol(SimpleParserSym.DIVIDE); }
+{modulo}        { System.out.println("%");return new Symbol(SimpleParserSym.MODULO); }
+{parg}         { System.out.println("(");return new Symbol(SimpleParserSym.PARG); }
+{pard}      { System.out.println(")");return new Symbol(SimpleParserSym.PARD); }
+{sep}+        {System.out.println(";");return new Symbol(SimpleParserSym.SEP); }
+{number}        { return new Symbol(SimpleParserSym.NUMBER,new Integer(yytext()));}
